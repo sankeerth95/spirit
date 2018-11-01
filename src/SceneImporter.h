@@ -23,6 +23,7 @@ public:
 
     const aiScene* getScene();
 
+    const aiMesh* getMesh(unsigned int i);
 };
 
 #endif //EFFGAMEENGINE_SCENEIMPORTER_H

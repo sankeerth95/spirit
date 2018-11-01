@@ -6,6 +6,7 @@
 #include <sstream>
 #include "Texture.h"
 #include "SceneImporter.h"
+#include "Drawable.h"
 
 
 std::string parseShader(const std::string& path){
@@ -70,51 +71,16 @@ int main()
     glUseProgram(program);
 
 
-    unsigned int vertex_array, vertex_buffer;
-    glGenVertexArrays(1, &vertex_array);
-    glBindVertexArray(vertex_array);
-
-    float data[] = {0.0f, 0.0f, 0.0f, 0.0f,
-                    0.0f, 1.0f, 0.0f, 1.0f,
-                    1.0f, 0.0f, 1.0f, 0.0f,
-                    1.0f, 1.0f, 1.0f, 1.0f};
-
-
-    glGenBuffers(1, &vertex_buffer);
-    glBindBuffer(GL_ARRAY_BUFFER, vertex_buffer);
-    glBufferData(GL_ARRAY_BUFFER, 16*sizeof(float), data, GL_STATIC_DRAW);
-
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), nullptr);
-    glEnableVertexAttribArray(0);
-
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 4*sizeof(float), (void *) (2*sizeof(float) ) );
-    glEnableVertexAttribArray(1);
-
-    unsigned int indices[] = {
-            0, 1, 2,
-            1, 2, 3
-    };
-
-    unsigned int index_buffer;
-    glGenBuffers(1, &index_buffer);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, index_buffer);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, 6*sizeof(unsigned int), indices, GL_STATIC_DRAW);
-
-
-
-    const std::string tex_path = "/home/sankeerth/CLionProjects/spirit/res/tex2.jpg";
-    Texture tex1(tex_path);
-    tex1.bind(2);
-
-    int tex1_location = glGetUniformLocation(program, "tex1_texture");
-    glUniform1i(tex1_location, 2);
-
-
-
-
 
     SceneImporter sc("/home/sankeerth/CLionProjects/spirit/res/cube.obj");
-    sc.getScene();
+    const aiScene* sc1 = sc.getScene();
+    if(!sc1)
+        std::cout << "Error" <<std::endl;
+
+    Drawable d;
+    Mesh *mm = new Mesh(sc1->mMeshes[0]);
+    d.update(mm);
+
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -122,8 +88,9 @@ int main()
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
+        d.draw();
         // OpenGL draw call
-        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);

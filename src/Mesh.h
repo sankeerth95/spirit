@@ -9,20 +9,24 @@
 #include <vector>
 #include <string>
 #include <assimp/scene.h>
+#include "VertecSpec.h"
 
 class Mesh {
 private:
-    const aiScene *scene;
-    std::vector<glm::vec3> vertices;
-    std::vector<glm::vec3> normals;
+    std::vector<Vertex> points;
     std::vector<unsigned int> indices;
+    unsigned int num_vertices, num_indices;
+
 
 public:
     //textures needed to be added too
     explicit Mesh(const aiMesh* m);
 
-    void getVertices();
-
+    //getter methods
+    std::vector<Vertex> getPoints();
+    unsigned int getNumVertices();
+    unsigned int getNumIndices();
+    std::vector<unsigned int> getIndices();
 
 };
 

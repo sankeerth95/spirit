@@ -20,6 +20,12 @@ const aiScene* SceneImporter::getScene(){
 }
 
 
+const aiMesh *SceneImporter::getMesh(unsigned int i) {
+    //TODO: WTF is this
+    return nullptr;
+}
+
+
 SceneImporter::~SceneImporter(){
     //TODO: fill this up
 }
