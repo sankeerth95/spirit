@@ -1,3 +1,5 @@
+Spirit game engine
+
 An openGL based game engine, designed for ease of use. 
 The complexity in building a game engine is as complex as building a car engine: many
 components working together, each performing it's own duty.
