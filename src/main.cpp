@@ -7,41 +7,17 @@
 #include "Texture.h"
 #include "SceneImporter.h"
 #include "Drawable.h"
-
-
-std::string parseShader(const std::string& path){
-
-    std::ifstream f(path);
-    std::stringstream ss;
-    ss << f.rdbuf();
-
-    return ss.str();
-}
-
-unsigned int create_shader(unsigned int type, const std::string &src){
-
-    const char* cc = &src.c_str()[0];
-
-    unsigned int shader = glCreateShader(type);
-    glShaderSource(shader, 1, &cc, nullptr);
-    glCompileShader(shader);
-
-//    glGetShaderiv(shader, GL_COMPILE_STATUS, )
-
-    return shader;
-}
+#include "Shader.h"
 
 
 int main()
 {
-    GLFWwindow* window;
-
     /* Initialize the library */
     if (!glfwInit())
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    window = glfwCreateWindow(640, 480, "Ascention", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(640, 480, "Ascention", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
         return -1;
@@ -55,32 +31,21 @@ int main()
 
     std::cout << glGetString(GL_VERSION) << std::endl;
 
+    const std::string vPath = "res/vertex_shader1.vert";
+    const std::string fPath = "res/fragment_shader1.frag";
 
+    Shader shader(vPath, fPath);
+    shader.useProgram();
 
-    unsigned int vertex_shader, fragment_shader;
-    const std::string vPath = "/home/sankeerth/CLionProjects/spirit/res/vertex_shader1.vert";
-    const std::string fPath = "/home/sankeerth/CLionProjects/spirit/res/fragment_shader1.frag";
-
-    vertex_shader = create_shader(GL_VERTEX_SHADER, parseShader(vPath));
-    fragment_shader = create_shader(GL_FRAGMENT_SHADER, parseShader(fPath));
-
-    unsigned int program = glCreateProgram();
-    glAttachShader(program, vertex_shader);
-    glAttachShader(program, fragment_shader);
-    glLinkProgram(program);
-    glUseProgram(program);
-
-
-
-    SceneImporter sc("/home/sankeerth/CLionProjects/spirit/res/cube.obj");
+    SceneImporter sc("res/cube.obj");
     const aiScene* sc1 = sc.getScene();
     if(!sc1)
         std::cout << "Error" <<std::endl;
 
     Drawable d;
     Mesh *mm = new Mesh(sc1->mMeshes[0]);
+    //update drawable meshed
     d.update(mm);
-
 
     /* Loop until the user closes the window */
     while (!glfwWindowShouldClose(window))
@@ -88,9 +53,8 @@ int main()
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT);
 
-        d.draw();
         // OpenGL draw call
-//        glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+        d.draw();
 
         /* Swap front and back buffers */
         glfwSwapBuffers(window);
