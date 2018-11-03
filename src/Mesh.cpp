@@ -17,7 +17,7 @@ Mesh::Mesh(const aiMesh* m) {
 
     for (int i = 0; i < num_vertices; i++) {
         points[i].vertices = glm::vec3(m->mVertices[i].x, m->mVertices[i].y, m->mVertices[i].z);
-        points[i].normals = glm::vec3(m->mNormals[i].x, m->mNormals[i].y, m->mNormals[i].z);
+//        points[i].normals = glm::vec3(m->mNormals[i].x, m->mNormals[i].y, m->mNormals[i].z);
 //        points[i].tex_coords = glm::vec2(m->mTextureCoords[i]->x,
 //                                       m->mTextureCoords[i]->y);
     }
