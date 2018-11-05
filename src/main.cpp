@@ -43,22 +43,23 @@ int main() {
 
     glm::mat4 model(1.0f);
     glm::mat4 view(1.0f);
-    glm::mat4 proj = //glm::ortho(-100.0f, 100.0f, -100.0f, 100.0f, -200.0f, 200.0f);
-            glm::perspective(glm::radians(35.0f), 4.0f/3.0f, 0.1f, 100.0f);
+    glm::mat4 proj =
+//            glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, -20.0f, 20.0f)/3.0f;
+             glm::perspective(glm::radians(70.0f), 4.0f/3.0f, 0.1f, 3.0f);
     glm::mat4 mvp = proj*view*model;
 
 
-
     int mvp_location = glGetUniformLocation(shader.getProgram(), "u_mvp");
-    glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(mvp));
 
-
-    SceneImporter sc("res/road.blend");
+    SceneImporter sc("res/manysquarestex.obj");
     const aiScene* sc1 = sc.getScene();
     if(!sc1){
         std::cout << "Error" <<std::endl;
         return -1;
     }
+
+    Texture texture("res/tex1.jpg");
+    texture.bind(0);
 
     Drawable d;
     Mesh *mm = new Mesh(sc1->mMeshes[0]);
@@ -70,35 +71,39 @@ int main() {
 
 
     /* Loop until the user closes the window */
-    glEnable(GL_DEPTH_TEST);
+//    glEnable(GL_DEPTH_TEST);
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 
-        std::cout << Controller::mouse_yaw <<" "<< Controller::mouse_pitch << std::endl;
+//        std::cout << Controller::mouse_yaw <<" "<< Controller::mouse_pitch << std::endl;
 //        if(Controller::mouse_yaw > 0.0)
 
-        glm::vec3 eye;
         float yaw_rad = -glm::radians(Controller::mouse_yaw);
         float pitch_rad = -glm::radians(Controller::mouse_pitch);
-        eye.z =  std::cos(yaw_rad)*std::cos(pitch_rad);
-        eye.y = std::sin(pitch_rad);
+
+        float yy = .7*std::sin(0.000001*(clock()));
+        float xx = .0*std::cos(0.000001*(clock()));;
+
+        yaw_rad = yy;
+        pitch_rad = xx;
+
+        glm::vec3 eye;
+        eye.y =  std::cos(yaw_rad)*std::cos(pitch_rad);
+        eye.z = std::sin(pitch_rad);
         eye.x = std::sin(yaw_rad)*std::cos(pitch_rad);
 
-        glm::vec3 right = glm::vec3(
-                sin(yaw_rad - 3.14f/2.0f),
-                0,
-                cos(yaw_rad - 3.14f/2.0f)
-        );
+//        eye = glm::vec3(0.0f, 1.0f, yy+0.0f);
+        glm::vec3 up = glm::vec3(1.0f, 0.0f, 0.0f);
+        glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f);
 
-        glm::vec3 up = glm::cross(right, eye);
+        view = glm::lookAt(position, position+eye, up);
 
-        float yy = std::sin(0.000006*(clock()));
-        float xx = 3*yy;
-        view = glm::lookAt(eye,
-                           glm::vec3(0.0, 0.0, -3.0f), up);
+//        view = glm::translate(model, glm::vec3(0.0f, yy, yy));
+//        view = glm::rotate(view, yy, glm::vec3(0.0f, 1.0f, 0.0f));
+
         mvp = proj*view*model;
         glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(mvp));
 

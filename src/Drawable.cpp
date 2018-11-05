@@ -35,7 +35,6 @@ void Drawable::loadBuffers(void* data, unsigned int size, unsigned int buffer,
     glBindBuffer(target, buffer);
     glBufferData(target, size, data, GL_STATIC_DRAW);
     glBindBuffer(target, 0);
-
 }
 
 void Drawable::update(Mesh* m){     //poinnum_verticester is const? shows some error if so
@@ -56,7 +55,7 @@ void Drawable::draw(){
     //TODO: just bind every buffer before draw call
     glBindVertexArray(vao);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo); //element buffer has to be bound!!!
-    glDrawElements(GL_TRIANGLES, num_vertices, GL_UNSIGNED_INT, nullptr);
+    glDrawElements(GL_TRIANGLES, num_indices, GL_UNSIGNED_INT, nullptr);
 
     glBindVertexArray(0);
 
