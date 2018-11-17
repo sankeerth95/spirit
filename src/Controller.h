@@ -14,6 +14,7 @@ public:
     static float mouse_yaw, mouse_pitch;
     static float mouse_sensitivity;
 
+
     static void setController(GLFWwindow *window);
 
 };
