@@ -13,7 +13,7 @@ class Controller {
 public:
     static float mouse_yaw, mouse_pitch;
     static float mouse_sensitivity;
-
+    static bool key_w, key_esc;
 
     static void setController(GLFWwindow *window);
 

@@ -8,13 +8,14 @@
 
 #include <glm/ext.hpp>
 #include "GameState.h"
+#include "Mesh.h"
 
 class FPSState : public GameState {
 
 public:
 
 
-
+    glm::vec3 position;
     int mvp_location;
     glm::mat4 proj;
     glm::mat4 model;
@@ -28,7 +29,8 @@ public:
 
     void update() override;
 
-};
+    Mesh* getMesh() override;
 
+};
 
 #endif //SPIRIT_FPSSTATE_H

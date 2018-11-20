@@ -7,6 +7,7 @@
 
 
 #include "Shader.h"
+#include "Mesh.h"
 
 class GameState {
 
@@ -15,6 +16,8 @@ public:
     virtual void set_shaders()=0;
 
     virtual void update()=0;
+
+    virtual Mesh* getMesh()=0;
 
 };
 

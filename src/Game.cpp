@@ -10,39 +10,34 @@
 #include "SceneImporter.h"
 #include "Texture.h"
 #include "Drawable.h"
+#include "MenuState.h"
 
-Game::Game(GLFWwindow *window): gs(new FPSState()), texture("res/tex1.jpg") {
+Game::Game(GLFWwindow *window): /*gs(new FPSState()),*/ texture("res/tex1.jpg") {
 
-
-    gs->set_shaders();
-
-//    int light1_location = glGetUniformLocation(shader.getProgram(), "u_light1pos");
-//    glm::vec3 ll;
-//    glUniform3fv(light1_location, 1, &ll);
-
-    SceneImporter sc("res/house_join.obj");
-    const aiScene* sc1 = sc.getScene();
-    if(!sc1){
-        std::cout << "Error" <<std::endl;
-        return;
-    }
-
+    switch_state(new FPSState());
     texture.bind(0);
-
-    Mesh *mm = new Mesh(sc1->mMeshes[0]);
-    //update drawable meshed
-    d.update(mm);
-
 
     Controller::setController(window);
 }
 
 void Game::update() {
 
+    if(Controller::key_esc)
+        switch_state(new MenuState());
     gs->update();
 
- }
+}
 
 void Game::render() {
     d.draw();
+}
+
+void Game::switch_state(GameState *new_state) {
+
+    gs = new_state;
+    gs->set_shaders();
+
+
+    d.update(gs->getMesh());
+
 }

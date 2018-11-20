@@ -16,16 +16,14 @@
 
 class Game {
 
-private:
-
+public:
     GameState *gs;
 
     Drawable d;
     Texture texture;
 
-    void switch_state(GameState &new_state);
+    void switch_state(GameState *new_state);
 
-public:
     explicit Game(GLFWwindow * window);
 
     void update();

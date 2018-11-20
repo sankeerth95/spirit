@@ -1,17 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <fstream>
 #include <iostream>
-#include <sstream>
-#include <glm/ext.hpp>
-#include <chrono>
-#include <math.h>
-#include "Texture.h"
-#include "SceneImporter.h"
-#include "Drawable.h"
-#include "Shader.h"
-#include "Controller.h"
 #include "Game.h"
 
 
