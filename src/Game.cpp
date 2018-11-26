@@ -12,10 +12,9 @@
 #include "Drawable.h"
 #include "MenuState.h"
 
-Game::Game(GLFWwindow *window): /*gs(new FPSState()),*/ texture("res/tex1.jpg") {
+Game::Game(GLFWwindow *window): d(32) {
 
     switch_state(new FPSState());
-    texture.bind(0);
 
     Controller::setController(window);
 }
@@ -25,11 +24,11 @@ void Game::update() {
     if(Controller::key_esc)
         switch_state(new MenuState());
     gs->update();
-
 }
 
 void Game::render() {
-    d.draw();
+    for(int i = d.num_buffers; i >= 0; i--)
+        d.draw(i);
 }
 
 void Game::switch_state(GameState *new_state) {
@@ -37,7 +36,7 @@ void Game::switch_state(GameState *new_state) {
     gs = new_state;
     gs->set_shaders();
 
-
-    d.update(gs->getMesh());
-
+    for(int i = 0; i < gs->numMeshes; i++) {
+        d.update(gs->getMesh(i), i);
+    }
 }

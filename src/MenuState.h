@@ -14,7 +14,7 @@ public:
 
     void update() override;
 
-    Mesh *getMesh() override;
+    Mesh* getMesh(int i) override;
 
 };
 

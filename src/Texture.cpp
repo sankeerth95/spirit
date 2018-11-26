@@ -2,6 +2,7 @@
 // Created by sankeerth on 10/20/18.
 //
 
+#include <iostream>
 #include "Texture.h"
 
 
@@ -22,19 +23,22 @@ Texture::Texture(std::string file_path){
     glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, w, h, 0, GL_RGBA, GL_UNSIGNED_BYTE, img);
     glBindTexture(GL_TEXTURE_2D, 0);
 
+    stbi_image_free(img);
 }
 
-void Texture::bind(unsigned int slot){
+void Texture::bind(int slot){
+
     glActiveTexture(GL_TEXTURE0 + slot);
     glBindTexture(GL_TEXTURE_2D, texture);
 }
 
 void Texture::unbind(){
-    glBindTexture(GL_TEXTURE_2D, 0);
+//    glActiveTexture(GL_TEXTURE0 + slo);
+//    glBindTexture(GL_TEXTURE_2D, 0);
+//      go to slot with glActiveTexture, and clear it
 }
 
 Texture::~Texture(){
     unbind();
     glDeleteTextures(1, &texture);
-    stbi_image_free(img);
 }

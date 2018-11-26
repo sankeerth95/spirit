@@ -15,7 +15,7 @@ SceneImporter::SceneImporter(const std::string &filename) {
                               aiProcess_JoinIdenticalVertices
                               );
 
-    std::cout << scene->mNumMaterials << std::endl;
+//    std::cout << scene->mNumMaterials << std::endl;
 //    std::cout << scene->mMaterials[0]->mProperties[0]-> << std::endl;
 
     //    importer.

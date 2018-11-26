@@ -12,12 +12,13 @@
 class GameState {
 
 public:
+    int numMeshes;
     Shader *shader;
     virtual void set_shaders()=0;
 
     virtual void update()=0;
 
-    virtual Mesh* getMesh()=0;
+    virtual Mesh* getMesh(int i)=0;
 
 };
 

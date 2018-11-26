@@ -27,6 +27,7 @@ int main() {
     Game g(window);
     /* Loop until the user closes the window */
     glEnable(GL_DEPTH_TEST);
+    glfwSwapInterval(1);
     while (!glfwWindowShouldClose(window))
     {
         /* Render here */

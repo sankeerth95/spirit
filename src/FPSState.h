@@ -9,19 +9,24 @@
 #include <glm/ext.hpp>
 #include "GameState.h"
 #include "Mesh.h"
+#include "SceneImporter.h"
+#include "Texture.h"
 
 class FPSState : public GameState {
 
 public:
 
-
     glm::vec3 position;
+    glm::vec3 eye;
+    glm::vec3 up;
     int mvp_location;
     glm::mat4 proj;
     glm::mat4 model;
     glm::mat4 view;
     glm::mat4 mvp;
 
+    SceneImporter *sc;
+    std::vector<Texture*> textures;
 
     FPSState();
 
@@ -29,7 +34,7 @@ public:
 
     void update() override;
 
-    Mesh* getMesh() override;
+    Mesh* getMesh(int i) override;
 
 };
 

@@ -5,9 +5,8 @@
 #ifndef EFFGAMEENGINE_TEXTURE_H
 #define EFFGAMEENGINE_TEXTURE_H
 
-
-#include <string>
 #include <GL/glew.h>
+#include <string>
 
 #include "../stb/stb_image.h"
 
@@ -18,7 +17,7 @@ private:
 
 public:
     explicit Texture(std::string file_path);
-    void bind(unsigned int slot=0);
+    void bind(int slot=0);
     void unbind();
     ~Texture();
 };

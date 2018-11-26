@@ -20,7 +20,6 @@ public:
     GameState *gs;
 
     Drawable d;
-    Texture texture;
 
     void switch_state(GameState *new_state);
 
