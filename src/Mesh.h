@@ -16,9 +16,10 @@ private:
     std::vector<Vertex> points;
     std::vector<unsigned int> indices;
     unsigned int num_vertices, num_indices;
-    int material_index;
 
 public:
+    int material_index;
+
     //textures needed to be added too
     explicit Mesh(const aiMesh* m);
 

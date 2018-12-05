@@ -8,12 +8,15 @@
 
 #include "Shader.h"
 #include "Mesh.h"
+#include "SceneImporter.h"
 
 class GameState {
 
 public:
     int numMeshes;
     Shader *shader;
+    SceneImporter *sc;
+
     virtual void set_shaders()=0;
 
     virtual void update()=0;

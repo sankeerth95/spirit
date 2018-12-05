@@ -29,9 +29,10 @@ public:
     void update(Mesh *m, int object_num);
     void draw(int object_num);
 
-    void loadMaterials(aiScene* sc);
+    void loadMaterials(const aiScene* sc);
 
     int num_buffers;
+    std::vector<int> material_index;
 };
 
 

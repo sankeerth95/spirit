@@ -12,7 +12,7 @@
 #include "Drawable.h"
 #include "MenuState.h"
 
-Game::Game(GLFWwindow *window): d(32) {
+Game::Game(GLFWwindow *window): d(2) {
 
     switch_state(new FPSState());
 
@@ -27,6 +27,7 @@ void Game::update() {
 }
 
 void Game::render() {
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     for(int i = d.num_buffers; i >= 0; i--)
         d.draw(i);
 }
@@ -39,4 +40,7 @@ void Game::switch_state(GameState *new_state) {
     for(int i = 0; i < gs->numMeshes; i++) {
         d.update(gs->getMesh(i), i);
     }
+
+    d.loadMaterials(gs->sc->getScene());
+
 }

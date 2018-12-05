@@ -19,6 +19,8 @@ Drawable::Drawable(int num_objects) {
     num_vertices = new unsigned int[num_objects];
     num_indices = new unsigned int[num_objects];
 
+    material_index.resize(num_objects);
+
     glGenVertexArrays(num_objects, vao);
     glGenBuffers(num_objects, vbo);
     glGenBuffers(num_objects, ibo);
@@ -36,8 +38,8 @@ Drawable::Drawable(int num_objects) {
         glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *) (2 * sizeof(glm::vec3)));
     }
 
-    glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
 
 
 }
@@ -56,6 +58,7 @@ void Drawable::update(Mesh *m, int object_num) {     //poinnum_verticester is co
     num_vertices[object_num] = m->getNumVertices();
     num_indices[object_num] = m->getNumIndices();
 
+    material_index[object_num] = m->material_index;
     loadBuffers( &(m->getPoints()[0]), num_vertices[object_num]*sizeof(Vertex), vbo[object_num], GL_ARRAY_BUFFER);
     loadBuffers( &(m->getIndices()[0]), num_indices[object_num]*sizeof(unsigned int), ibo[object_num], GL_ELEMENT_ARRAY_BUFFER);
 
@@ -63,16 +66,42 @@ void Drawable::update(Mesh *m, int object_num) {     //poinnum_verticester is co
 }
 
 void Drawable::draw(int object_num) {
-   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    //TODO: just bind every buffer before draw call
     glBindVertexArray(vao[object_num]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo[object_num]); //element buffer has to be bound!!!
 
+    textures[material_index[object_num]]->bind(0);
     glDrawElements(GL_TRIANGLES, num_indices[object_num], GL_UNSIGNED_INT, nullptr);
 
  //   glBindVertexArray(0);
 }
+
+
+void Drawable::loadMaterials(const aiScene* sc) {
+
+    //single embedded diffuse texture per material handled, no colors at the moment.
+
+    /* getTexture Filenames and Numb of Textures */
+    int num_materials = sc->mNumMaterials;
+    textures.resize(num_materials);
+    for (unsigned int m = 0; m < num_materials; m++) {
+        unsigned int texIndex = 0;
+        aiReturn texFound = AI_SUCCESS;
+        aiString path;    // filename
+        if (sc->mMaterials[m]->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
+            texFound = sc->mMaterials[m]->GetTexture(aiTextureType_DIFFUSE, texIndex, &path);
+
+            if (texFound == AI_SUCCESS) {
+                textures[m] = new Texture(path.C_Str());
+            } else {
+                textures[m] = new Texture("res/tex1.jpg");
+            }
+        }
+        //handle color materials here boi
+//        else if (sc->mMaterials[m]->)
+    }
+}
+
 
 Drawable::~Drawable() {
     glDisableVertexAttribArray(0);
@@ -82,24 +111,6 @@ Drawable::~Drawable() {
     glDeleteBuffers(num_buffers, vbo);
     glDeleteBuffers(num_buffers, ibo);
     glDeleteVertexArrays(num_buffers, vao);
+
+//    delete textures;
 }
-
-void Drawable::loadMaterials(aiScene* sc) {
-
-    textures.resize(sc->mNumMaterials);
-    for (unsigned int i = 0 ; i < sc->mNumMaterials ; i++) {
-        const aiMaterial* pMaterial = sc->mMaterials[i];
-        textures[i] = NULL;
-        if (pMaterial->GetTextureCount(aiTextureType_DIFFUSE) > 0) {
-            aiString Path;
-
-            if (pMaterial->GetTexture(aiTextureType_DIFFUSE, 0, &Path, NULL, NULL, NULL, NULL, NULL) == AI_SUCCESS) {
-                std::string FullPath = Path.data;
-                textures[i] = new Texture(FullPath.c_str());
-            }
-        }
-        if (!textures[i]) {
-            textures[i] = new Texture("res/tex1.jpg");
-        }
-    }
-};

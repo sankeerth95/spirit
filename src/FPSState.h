@@ -9,7 +9,6 @@
 #include <glm/ext.hpp>
 #include "GameState.h"
 #include "Mesh.h"
-#include "SceneImporter.h"
 #include "Texture.h"
 
 class FPSState : public GameState {
@@ -25,7 +24,6 @@ public:
     glm::mat4 view;
     glm::mat4 mvp;
 
-    SceneImporter *sc;
     std::vector<Texture*> textures;
 
     FPSState();

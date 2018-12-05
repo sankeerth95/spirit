@@ -10,22 +10,10 @@
 
 FPSState::FPSState(): proj(1.0f), model(1.0f), view(1.0f) {
 //    shader = new Shader("res/vertex_shader1.vert", "res/fragment_shader1.frag");
-    sc = new SceneImporter("res/Reception_table.obj");
+    sc = new SceneImporter("res/cube_textured.fbx");
     shader = new Shader("res/vertex_shader1.vert", "res/fragment_shader1.frag");
 
     numMeshes = sc->getScene()->mNumMeshes;
-//    sc->getScene()->mNumTextures;
-    std::cout << numMeshes <<std::endl;
-
-    textures.push_back( new Texture("res/tex1.jpg") );
-    textures.push_back( new Texture("res/tex2.jpg") );
-
-    textures[0]->bind(0);
-    textures[1]->bind(1);
-
-//    std::cout << sc->getScene()->mTextures[0]->mFilename.data << std::endl;
-//    sc->getScene()->mMaterials[0]->mProperties[0];
-
 }
 
 void FPSState::set_shaders() {
@@ -40,15 +28,10 @@ void FPSState::set_shaders() {
 
     mvp_location = glGetUniformLocation(shader->getProgram(), "u_mvp");
 
-
     int texloc1 = glGetUniformLocation(shader->getProgram(), "tex1_texture");
-    glUniform1i(texloc1, 1);
-    std::cout << glGetError() << std::endl;
-
+    glUniform1i(texloc1, 0);
 
 }
-
-
 
 
 Mesh* FPSState::getMesh(int i) {
@@ -57,7 +40,6 @@ Mesh* FPSState::getMesh(int i) {
         std::cout << "Error" << std::endl;
         return nullptr;
     }
-
 
     Mesh *mm = new Mesh(sc1->mMeshes[i]);
 //update drawable meshed
