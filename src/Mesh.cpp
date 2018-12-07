@@ -7,7 +7,8 @@
 #include <assimp/postprocess.h>
 #include <iostream>
 
-Mesh::Mesh(const aiMesh* m) {
+Mesh::Mesh(const aiMesh *m, glm::mat4 global_transform)
+{
 
     //populate vertices and shit
     num_vertices = m->mNumVertices;
@@ -19,7 +20,9 @@ Mesh::Mesh(const aiMesh* m) {
     material_index = m->mMaterialIndex;
 
     for (int i = 0; i < num_vertices; i++) {
-        points[i].vertices = glm::vec3(m->mVertices[i].x, m->mVertices[i].y, m->mVertices[i].z);
+        points[i].vertices = glm::vec4(m->mVertices[i].x, m->mVertices[i].y, m->mVertices[i].z, 1.0f)*global_transform;
+
+        // TODO: normals under transform
         points[i].normals = glm::vec3(m->mNormals[i].x, m->mNormals[i].y, m->mNormals[i].z);
         points[i].tex_coords = glm::vec2(m->mTextureCoords[0][i].x,
                                        m->mTextureCoords[0][i].y);

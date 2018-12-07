@@ -14,11 +14,8 @@ SceneImporter::SceneImporter(const std::string &filename) {
                               aiProcess_GenNormals |
                               aiProcess_JoinIdenticalVertices
                               );
+//    scene->mFlags[0]
 
-//    std::cout << scene->mNumMaterials << std::endl;
-//    std::cout << scene->mMaterials[0]->mProperties[0]-> << std::endl;
-
-    //    importer.
 }
 
 const aiScene* SceneImporter::getScene(){

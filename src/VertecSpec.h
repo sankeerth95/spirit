@@ -8,7 +8,7 @@
 #include <glm/glm.hpp>
 
 typedef struct VertexSpec{
-    glm::vec3 vertices;
+    glm::vec4 vertices;
     glm::vec3 normals;
     glm::vec2 tex_coords;
 } Vertex;

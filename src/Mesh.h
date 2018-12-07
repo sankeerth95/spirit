@@ -21,7 +21,7 @@ public:
     int material_index;
 
     //textures needed to be added too
-    explicit Mesh(const aiMesh* m);
+    explicit Mesh(const aiMesh *m, glm::mat4 global_transform);
 
     //getter methods
     std::vector<Vertex> getPoints();

@@ -25,6 +25,8 @@ public:
 
     explicit Game(GLFWwindow * window);
 
+    void dfs_mesh(aiNode *node, glm::mat4 global_transform);
+
     void update();
     void render();
 };

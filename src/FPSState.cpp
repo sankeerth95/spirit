@@ -21,9 +21,9 @@ void FPSState::set_shaders() {
 
     shader->useProgram();
 
-    position = glm::vec3(0.0f, 0.0f, 0.2f);
+    position = glm::vec3(0.0f, 0.0f, 1.5f);
 
-    proj = glm::perspective(glm::radians(70.0f), 4.0f/3.0f, 0.1f, 3.0f);
+    proj = glm::perspective(glm::radians(70.0f), 4.0f/3.0f, 0.3f, 15.0f);
     glm::mat4 mvp = proj*view*model;
 
     mvp_location = glGetUniformLocation(shader->getProgram(), "u_mvp");
@@ -34,14 +34,14 @@ void FPSState::set_shaders() {
 }
 
 
-Mesh* FPSState::getMesh(int i) {
+Mesh * FPSState::getMesh(int i, glm::mat4 global_transform) {
     const aiScene *sc1 = sc->getScene();
     if (!sc1) {
         std::cout << "Error" << std::endl;
         return nullptr;
     }
 
-    Mesh *mm = new Mesh(sc1->mMeshes[i]);
+    Mesh *mm = new Mesh(sc1->mMeshes[i], global_transform);
 //update drawable meshed
     return mm;
 }

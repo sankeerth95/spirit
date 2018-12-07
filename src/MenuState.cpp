@@ -17,6 +17,6 @@ void MenuState::update() {
 }
 
 
-Mesh* MenuState::getMesh(int i) {
+Mesh * MenuState::getMesh(int i, glm::mat4 global_transform) {
     return nullptr;
 }
