@@ -35,31 +35,14 @@ void Game::render() {
 
 void Game::dfs_mesh(aiNode *node, glm::mat4 global_transform) {
 
-    // TODO: Determine if premultiply is the correct way
     glm::mat4 trns = global_transform*glm::make_mat4(&(node->mTransformation[0][0]));
-/*
-    trns = glm::mat4(1.0f);
-    trns[0][3] = 2.0f;
-    trns[1][1] = 1.0f;
-    trns[2][2] = 1.0f;
-//    trns[3][3] = 2.0f;
-*/
 
-
-    for(int i = 0; i < node->mNumMeshes; i++){
-
-        for(int k = 0; k < 4; k++) {
-            for (int j = 0; j < 4; j++)
-                std::cout << trns[k][j]<<" ";
-            std::cout << std::endl;
-        }
-
+    for(int i = 0; i < node->mNumMeshes; i++)
         d.update(gs->getMesh(node->mMeshes[i], trns), node->mMeshes[i]);
-    }
 
-    for(int i = 0; i < node->mNumChildren; i++){
+    for(int i = 0; i < node->mNumChildren; i++)
         dfs_mesh(node->mChildren[i], trns);
-    }
+
 
 }
 
