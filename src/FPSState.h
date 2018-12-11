@@ -28,9 +28,13 @@ public:
 
     FPSState();
 
+    void dfs_mesh(aiNode *node, glm::mat4 global_transform);
+
     void set_shaders() override;
 
     void update() override;
+
+    void draw() override;
 
     Mesh* getMesh(int i, glm::mat4 global_transform) override;
 

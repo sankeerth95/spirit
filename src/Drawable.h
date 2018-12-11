@@ -26,7 +26,7 @@ public:
     explicit Drawable(int num_objects);
     ~Drawable();
 
-    void update(Mesh *m, int object_num);
+    void loadStaticMesh(Mesh *m, int object_num);
     void draw(int object_num);
 
     void loadMaterials(const aiScene* sc);

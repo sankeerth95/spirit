@@ -10,10 +10,19 @@
 
 FPSState::FPSState(): proj(1.0f), model(1.0f), view(1.0f) {
 //    shader = new Shader("res/vertex_shader1.vert", "res/fragment_shader1.frag");
+
+    d = new Drawable(2);
+
     sc = new SceneImporter("res/cube_textured.fbx");
+    numMeshes = sc->getScene()->mNumMeshes;
+
+
+    dfs_mesh(sc->getScene()->mRootNode, glm::mat4(1.0f));
+    d->loadMaterials(sc->getScene());
+
+
     shader = new Shader("res/vertex_shader1.vert", "res/fragment_shader1.frag");
 
-    numMeshes = sc->getScene()->mNumMeshes;
 }
 
 void FPSState::set_shaders() {
@@ -31,10 +40,11 @@ void FPSState::set_shaders() {
     int texloc1 = glGetUniformLocation(shader->getProgram(), "tex1_texture");
     glUniform1i(texloc1, 0);
 
+
 }
 
 
-Mesh * FPSState::getMesh(int i, glm::mat4 global_transform) {
+Mesh* FPSState::getMesh(int i, glm::mat4 global_transform) {
     const aiScene *sc1 = sc->getScene();
     if (!sc1) {
         std::cout << "Error" << std::endl;
@@ -57,8 +67,8 @@ void FPSState::update() {
     eye.x = std::sin(yaw_rad) * std::cos(pitch_rad);
 
     if (Controller::key_w){
-        position.y += 0.00005f * std::cos(yaw_rad);
-        position.x += 0.00005f * std::sin(yaw_rad);
+        position.y += 0.0005f * std::cos(yaw_rad);
+        position.x += 0.0005f * std::sin(yaw_rad);
     }
     up = glm::vec3(0.0f, 0.0f, 1.0f);
 
@@ -67,3 +77,25 @@ void FPSState::update() {
     glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(mvp));
 
 }
+
+
+
+void FPSState::draw() {
+
+    for(int i = d->num_buffers; i >= 0; i--)
+        d->draw(i);
+}
+
+
+void FPSState::dfs_mesh(aiNode *node, glm::mat4 global_transform) {
+
+    glm::mat4 trns = global_transform*glm::make_mat4(&(node->mTransformation[0][0]));
+
+    for(int i = 0; i < node->mNumMeshes; i++)
+        d->loadStaticMesh(getMesh(node->mMeshes[i], trns), node->mMeshes[i]);
+
+    for(int i = 0; i < node->mNumChildren; i++)
+        dfs_mesh(node->mChildren[i], trns);
+
+}
+

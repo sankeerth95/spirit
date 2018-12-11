@@ -9,6 +9,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "SceneImporter.h"
+#include "Drawable.h"
 
 class GameState {
 
@@ -17,10 +18,12 @@ public:
     Shader *shader;
     SceneImporter *sc;
 
+    Drawable *d;
+
     virtual void set_shaders()=0;
 
     virtual void update()=0;
-
+    virtual void draw()=0;
     virtual Mesh *getMesh(int i, glm::mat4 global_transform) =0;
 
 };

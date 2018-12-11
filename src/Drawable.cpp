@@ -4,6 +4,7 @@
 
 #include <GL/glew.h>
 #include <iostream>
+#include <glm/ext.hpp>
 #include "Drawable.h"
 
 
@@ -51,7 +52,7 @@ void Drawable::loadBuffers(void* data, unsigned int size, unsigned int buffer,
     glBindBuffer(target, 0);
 }
 
-void Drawable::update(Mesh *m, int object_num) {     //poinnum_verticester is const? shows some error if so
+void Drawable::loadStaticMesh(Mesh *m, int object_num) {     //poinnum_verticester is const? shows some error if so
 
     glBindVertexArray(vao[object_num]);
 
@@ -75,6 +76,7 @@ void Drawable::draw(int object_num) {
 
  //   glBindVertexArray(0);
 }
+
 
 
 void Drawable::loadMaterials(const aiScene* sc) {
@@ -112,5 +114,11 @@ Drawable::~Drawable() {
     glDeleteBuffers(num_buffers, ibo);
     glDeleteVertexArrays(num_buffers, vao);
 
-//    delete textures;
+    delete vao;
+    delete vbo;
+    delete ibo;
+
+    delete num_vertices;
+    delete num_indices;
+
 }

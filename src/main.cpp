@@ -12,7 +12,7 @@ int main() {
         return -1;
 
     /* Create a windowed mode window and its OpenGL context */
-    GLFWwindow *window = glfwCreateWindow(640, 480, "Ascention", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(2*640, 2*480, "Ascention", nullptr, nullptr);
     if (!window) {
         glfwTerminate();
         return -1;

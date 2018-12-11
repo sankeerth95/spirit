@@ -16,16 +16,18 @@
 
 class Game {
 
+//private:
+ //   Drawable *d;
+
 public:
     GameState *gs;
 
-    Drawable d;
 
     void switch_state(GameState *new_state);
 
     explicit Game(GLFWwindow * window);
 
-    void dfs_mesh(aiNode *node, glm::mat4 global_transform);
+//    void dfs_mesh(aiNode *node, glm::mat4 global_transform);
 
     void update();
     void render();
