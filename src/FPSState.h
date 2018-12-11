@@ -13,6 +13,9 @@
 
 class FPSState : public GameState {
 
+private:
+    void dfs_mesh(aiNode *node, glm::mat4 global_transform);
+
 public:
 
     glm::vec3 position;
@@ -28,7 +31,6 @@ public:
 
     FPSState();
 
-    void dfs_mesh(aiNode *node, glm::mat4 global_transform);
 
     void set_shaders() override;
 
