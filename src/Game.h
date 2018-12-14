@@ -8,7 +8,7 @@
 
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
-#include "Drawable.h"
+#include "DrawableStatic.h"
 #include "Texture.h"
 #include "GameState.h"
 #include "FPSState.h"

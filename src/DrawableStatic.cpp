@@ -5,10 +5,10 @@
 #include <GL/glew.h>
 #include <iostream>
 #include <glm/ext.hpp>
-#include "Drawable.h"
+#include "DrawableStatic.h"
 
 
-Drawable::Drawable(int num_objects) {
+DrawableStatic::DrawableStatic(int num_objects) {
 
     num_buffers = num_objects;
 
@@ -45,14 +45,14 @@ Drawable::Drawable(int num_objects) {
 
 }
 
-void Drawable::loadBuffers(void* data, unsigned int size, unsigned int buffer,
+void DrawableStatic::loadBuffers(void* data, unsigned int size, unsigned int buffer,
         unsigned int target=GL_ARRAY_BUFFER){
     glBindBuffer(target, buffer);
     glBufferData(target, size, data, GL_STATIC_DRAW);
     glBindBuffer(target, 0);
 }
 
-void Drawable::loadStaticMesh(Mesh *m, int object_num) {     //poinnum_verticester is const? shows some error if so
+void DrawableStatic::loadStaticMesh(Mesh *m, int object_num) {     //poinnum_verticester is const? shows some error if so
 
     glBindVertexArray(vao[object_num]);
 
@@ -66,7 +66,7 @@ void Drawable::loadStaticMesh(Mesh *m, int object_num) {     //poinnum_verticest
     glBindVertexArray(0);
 }
 
-void Drawable::draw(int object_num) {
+void DrawableStatic::draw(int object_num) {
 
     glBindVertexArray(vao[object_num]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo[object_num]); //element buffer has to be bound!!!
@@ -79,7 +79,7 @@ void Drawable::draw(int object_num) {
 
 
 
-void Drawable::loadMaterials(const aiScene* sc) {
+void DrawableStatic::loadMaterials(const aiScene* sc) {
 
     //single embedded diffuse texture per material handled, no colors at the moment.
 
@@ -105,7 +105,7 @@ void Drawable::loadMaterials(const aiScene* sc) {
 }
 
 
-Drawable::~Drawable() {
+DrawableStatic::~DrawableStatic() {
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);

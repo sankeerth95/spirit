@@ -11,7 +11,9 @@
 #include "Mesh.h"
 #include "Texture.h"
 
-class Drawable {
+
+// One scheme of drawing things.
+class DrawableStatic {
 
 private:
     unsigned int *vao;
@@ -23,8 +25,8 @@ private:
             unsigned int target);
 
 public:
-    explicit Drawable(int num_objects);
-    ~Drawable();
+    explicit DrawableStatic(int num_objects);
+    ~DrawableStatic();
 
     void loadStaticMesh(Mesh *m, int object_num);
     void draw(int object_num);

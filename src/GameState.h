@@ -9,7 +9,7 @@
 #include "Shader.h"
 #include "Mesh.h"
 #include "SceneImporter.h"
-#include "Drawable.h"
+#include "DrawableStatic.h"
 
 class GameState {
 
@@ -18,7 +18,7 @@ public:
     Shader *shader;
     SceneImporter *sc;
 
-    Drawable *d;
+    DrawableStatic *d;
 
     virtual void set_shaders()=0;
 

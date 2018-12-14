@@ -9,9 +9,9 @@
 
 
 FPSState::FPSState(): proj(1.0f), model(1.0f), view(1.0f) {
-//    shader = new Shader("res/vertex_shader1.vert", "res/fragment_shader1.frag");
 
-    d = new Drawable(2);
+    //also is the number of draw calls
+    d = new DrawableStatic(3);
 
     sc = new SceneImporter("res/cube_textured.fbx");
     numMeshes = sc->getScene()->mNumMeshes;
@@ -39,7 +39,6 @@ void FPSState::set_shaders() {
 
     int texloc1 = glGetUniformLocation(shader->getProgram(), "tex1_texture");
     glUniform1i(texloc1, 0);
-
 
 }
 

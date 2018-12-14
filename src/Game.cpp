@@ -9,7 +9,7 @@
 #include "Controller.h"
 #include "SceneImporter.h"
 #include "Texture.h"
-#include "Drawable.h"
+#include "DrawableStatic.h"
 #include "MenuState.h"
 
 Game::Game(GLFWwindow *window) {
