@@ -46,6 +46,11 @@ void Shader::useProgram() {
     glUseProgram(program);
 }
 
+void Shader::unUseProgram() {
+    glUseProgram(0);
+}
+
+
 unsigned int Shader::getVertexShader() {
     return vertex_shader;
 }

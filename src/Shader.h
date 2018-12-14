@@ -18,6 +18,7 @@ private:
 public:
     Shader(const std::string& vs_path, const std::string& fs_path );
     void useProgram();
+    void unUseProgram();
 
     unsigned int getVertexShader();
     unsigned int getFragmentShader();
