@@ -21,24 +21,23 @@ FPSState::FPSState(): proj(1.0f), model(1.0f), view(1.0f) {
     d->loadMaterials(sc->getScene());
 
 
-    shader = new Shader("res/vertex_shader1.vert", "res/fragment_shader1.frag");
+    d->shader = new Shader("res/vertex_shader1.vert", "res/fragment_shader1.frag");
 
 }
 
 void FPSState::set_shaders() {
     //TODO: should load all paths from a config file
 
-    shader->useProgram();
 
     position = glm::vec3(0.0f, 0.0f, 1.5f);
 
     proj = glm::perspective(glm::radians(70.0f), 4.0f/3.0f, 0.3f, 15.0f);
     glm::mat4 mvp = proj*view*model;
 
-    mvp_location = glGetUniformLocation(shader->getProgram(), "u_mvp");
+    mvp_location = glGetUniformLocation(d->shader->getProgram(), "u_mvp");
 
-    int texloc1 = glGetUniformLocation(shader->getProgram(), "tex1_texture");
-    glUniform1i(texloc1, 0);
+    int texloc1 = glGetUniformLocation(d->shader->getProgram(), "tex1_texture");
+//    glUniform1i(texloc1, 0);
 
 }
 
@@ -58,6 +57,7 @@ Mesh* FPSState::getMesh(int i, glm::mat4 global_transform) {
 
 void FPSState::update() {
 
+
     float yaw_rad = glm::radians(Controller::mouse_yaw);
     float pitch_rad = glm::radians(Controller::mouse_pitch);
 
@@ -73,7 +73,14 @@ void FPSState::update() {
 
     view = glm::lookAt(position, position+eye, up);
     mvp = proj*view*model;
+
+
+
+    d->shader->useProgram();
+
     glUniformMatrix4fv(mvp_location, 1, GL_FALSE, glm::value_ptr(mvp));
+
+    d->shader->unUseProgram();
 
 }
 
@@ -81,8 +88,11 @@ void FPSState::update() {
 
 void FPSState::draw() {
 
+    d->shader->useProgram();
     for(int i = d->num_buffers; i >= 0; i--)
         d->draw(i);
+    d->shader->unUseProgram();
+
 }
 
 

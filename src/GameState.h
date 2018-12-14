@@ -15,7 +15,6 @@ class GameState {
 
 public:
     int numMeshes;
-    Shader *shader;
     SceneImporter *sc;
 
     DrawableStatic *d;

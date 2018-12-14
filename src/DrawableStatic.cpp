@@ -68,12 +68,14 @@ void DrawableStatic::loadStaticMesh(Mesh *m, int object_num) {     //poinnum_ver
 
 void DrawableStatic::draw(int object_num) {
 
+//    shader->useProgram();
     glBindVertexArray(vao[object_num]);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo[object_num]); //element buffer has to be bound!!!
 
     textures[material_index[object_num]]->bind(0);
     glDrawElements(GL_TRIANGLES, num_indices[object_num], GL_UNSIGNED_INT, nullptr);
 
+//    shader->unUseProgram();
  //   glBindVertexArray(0);
 }
 

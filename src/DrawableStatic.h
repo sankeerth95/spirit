@@ -10,9 +10,12 @@
 #include <vector>
 #include "Mesh.h"
 #include "Texture.h"
+#include "Shader.h"
 
 
 // One scheme of drawing things.
+// Draw and import all static meshes
+// basically every object coming under a single shader
 class DrawableStatic {
 
 private:
@@ -25,6 +28,9 @@ private:
             unsigned int target);
 
 public:
+
+    Shader *shader;
+
     explicit DrawableStatic(int num_objects);
     ~DrawableStatic();
 

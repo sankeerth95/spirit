@@ -6,9 +6,9 @@
 
 void MenuState::set_shaders() {
     //memory management????
-    shader = new Shader("res/vertex_shader_menu.vert", "res/fragment_shader_menu.frag");
+    d->shader = new Shader("res/vertex_shader_menu.vert", "res/fragment_shader_menu.frag");
 
-    shader->useProgram();
+    d->shader->useProgram();
 }
 
 
