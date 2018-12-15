@@ -13,7 +13,6 @@
 #include "MenuState.h"
 
 Game::Game(GLFWwindow *window) {
- //   d = new Drawable(2);
 
 
     switch_state(

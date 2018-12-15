@@ -22,6 +22,7 @@ public:
 
     //textures needed to be added too
     explicit Mesh(const aiMesh *m, glm::mat4 global_transform);
+    Mesh(std::vector<Vertex> v, std::vector<unsigned int> indices);
 
     //getter methods
     std::vector<Vertex> getPoints();

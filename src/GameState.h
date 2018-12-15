@@ -23,7 +23,7 @@ public:
 
     virtual void update()=0;
     virtual void draw()=0;
-    virtual Mesh *getMesh(int i, glm::mat4 global_transform) =0;
+//    virtual Mesh *getMesh(int i, glm::mat4 global_transform) =0;
 
 };
 

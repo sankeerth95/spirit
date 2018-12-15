@@ -9,7 +9,6 @@
 
 Mesh::Mesh(const aiMesh *m, glm::mat4 global_transform)
 {
-
     //populate vertices and shit
     num_vertices = m->mNumVertices;
     num_indices = m->mNumFaces * 3;
@@ -33,6 +32,25 @@ Mesh::Mesh(const aiMesh *m, glm::mat4 global_transform)
         indices[i+2] = m->mFaces[i/3].mIndices[2];
     }
 }
+
+
+Mesh::Mesh(std::vector<Vertex> v, std::vector<unsigned int> indices)
+{
+    //populate vertices and shit
+
+    num_vertices = v.size();
+    num_indices = indices.size();
+
+    points = v;
+    this->indices = indices;
+
+//    points.resize(num_vertices);
+//    indices.resize(num_indices);
+
+    material_index = 0;
+}
+
+
 
 //TODO: check the return type: is it creating a copy again?
 std::vector<Vertex> Mesh::getPoints() {

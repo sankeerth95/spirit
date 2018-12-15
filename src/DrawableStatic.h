@@ -16,6 +16,9 @@
 // One scheme of drawing things.
 // Draw and import all static meshes
 // basically every object coming under a single shader
+
+//Theres different drawables, but the one I'm focus
+
 class DrawableStatic {
 
 private:
@@ -34,14 +37,18 @@ public:
     explicit DrawableStatic(int num_objects);
     ~DrawableStatic();
 
+    std::vector<int> material_index;
     void loadStaticMesh(Mesh *m, int object_num);
     void draw(int object_num);
 
+    // assimp specific!
     void loadMaterials(const aiScene* sc);
 
-    int num_buffers;
-    std::vector<int> material_index;
-};
+    // general loading of textures/materials
+    void loadMaterials(std::vector<std::string> tex_path, int numMaterials);
 
+
+    int num_buffers;
+};
 
 #endif //EFFGAMEENGINE_RENDERABLE3D_H

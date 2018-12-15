@@ -16,7 +16,7 @@ public:
 
     void draw() override;
 
-    Mesh *getMesh(int i, glm::mat4 global_transform) override;
+//    Mesh *getMesh(int i, glm::mat4 global_transform) override;
 
 };
 

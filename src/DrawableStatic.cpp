@@ -80,7 +80,7 @@ void DrawableStatic::draw(int object_num) {
 }
 
 
-
+// through assimp ONLY
 void DrawableStatic::loadMaterials(const aiScene* sc) {
 
     //single embedded diffuse texture per material handled, no colors at the moment.
@@ -103,6 +103,13 @@ void DrawableStatic::loadMaterials(const aiScene* sc) {
         }
         //handle color materials here boi
 //        else if (sc->mMaterials[m]->)
+    }
+}
+
+void DrawableStatic::loadMaterials(std::vector<std::string> tex_path, int numMaterials) {
+    textures.resize(numMaterials);
+    for (unsigned int m = 0; m < numMaterials; m++) {
+        textures[m] = new Texture(tex_path[m]);
     }
 }
 
