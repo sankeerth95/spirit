@@ -11,7 +11,7 @@ HUD::HUD() {
     d = new DrawableStatic(1);
     numMeshes = 1;
 
-    Text text(" ");
+    Text text("A");
     text.generateTextMap(0, 0, 0.1);
     std::vector<Vertex> v = text.vv;// = text.generateTextMap();
     std::vector<unsigned int> indices = text.vv_indices ;
