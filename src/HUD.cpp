@@ -4,30 +4,26 @@
 
 #include <iostream>
 #include "HUD.h"
+#include "Text.h"
 
 HUD::HUD() {
 
     d = new DrawableStatic(1);
     numMeshes = 1;
 
-
-    std::vector<Vertex> v(3);
-    std::vector<unsigned int> indices(3);
+    Text text(" ");
+    text.generateTextMap(0, 0, 0.1);
+    std::vector<Vertex> v = text.vv;// = text.generateTextMap();
+    std::vector<unsigned int> indices = text.vv_indices ;
     std::vector<int> m(1, 0);
 
-    v[0].vertices = glm::vec4(0.0f, 0.0f, 0.0f, 1.0f);
-    v[0].tex_coords = glm::vec2(0.0f, 0.0f);
-    indices[0] = 0;
-    v[1].vertices = glm::vec4(0.0f, 0.5f, 0.0f, 1.0f);
-    v[1].tex_coords = glm::vec2(0.0f, 1.0f);
-    indices[1] = 1;
-    v[2].vertices = glm::vec4(0.5f, 0.5f, 0.0f, 1.0f);
-    v[2].tex_coords = glm::vec2(1.0f, 0.0f);
-    indices[2] = 2;
+
+
+
     Mesh* mm = new Mesh(v, indices);
     mm->material_index = 0;
 
-    std::vector<std::string> tex_paths(1, "res/tex1.jpg");
+    std::vector<std::string> tex_paths(1, "res/cells.png");
 
     d->loadStaticMesh(mm, 0);
     d->loadMaterials(tex_paths, 1);
@@ -53,5 +49,4 @@ void HUD::draw() {
     d->draw(0);
     d->shader->unUseProgram();
 }
-
 
